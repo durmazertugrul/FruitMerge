@@ -10,18 +10,16 @@ public class Tile : MonoBehaviour
     public int number { get; private set; }
     public bool isLocked { get; set; }
 
-    [SerializeField] private Image backgroundImage;
-    [SerializeField] private TMP_Text numberText;
+    [SerializeField] private Image tileBackground;
 
-    public void SetState(TileStateSO tileState, int number)
+    public void SetState(TileStateSO tileState)
     {
         this.tileState = tileState;
-        this.number = number;
+        this.number = tileState.chainNumber;
 
-        backgroundImage.color = tileState.backgroundColor;
-        numberText.color = tileState.textColor;
-        numberText.text = number.ToString();
+        tileBackground.sprite = tileState.spriteRef;
     }
+       
 
     public void SpawnTile(Cell cell)
     {

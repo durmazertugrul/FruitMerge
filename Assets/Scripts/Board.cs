@@ -49,7 +49,7 @@ public class Board : MonoBehaviour
     public void CreateTile()
     {
         Tile tile = Instantiate(tilePrefab, grid.transform);
-        tile.SetState(tileStates[0], Consts.Numbers.NUMBER_2);
+        tile.SetState(tileStates[0]);
         tile.SpawnTile(grid.GetRandomEmptyCell());
         tiles.Add(tile);
     }
@@ -120,13 +120,12 @@ public class Board : MonoBehaviour
         a.Merge(b.cell);
 
         int index = Mathf.Clamp(IndexOf(b.tileState) + 1, 0, tileStates.Length - 1);
-        int number = b.number * 2;
 
-        b.SetState(tileStates[index], number);
+        b.SetState(tileStates[index]);
 
         AnimateTiles(b, animationDuration);
 
-        GameManager.instance.IncreaseScore(number);
+        GameManager.instance.IncreaseScore(tileStates[index].point);
 
         AudioManager.instance.Play("MergeSound");
 
