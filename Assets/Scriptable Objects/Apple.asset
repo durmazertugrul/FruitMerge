@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Apple
   m_EditorClassIdentifier: Assembly-CSharp::TileStateSO
   fruitName: Apple
-  spriteRef: {fileID: 21300000, guid: 7216f166aafdd834da628ce6dce0e5e1, type: 3}
+  spriteRef: {fileID: 21300000, guid: 1ec911313b2aa684fa5cf7969a24cf4b, type: 3}
   chainNumber: 7
   point: 90

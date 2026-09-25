@@ -3,8 +3,8 @@ guid: 9349b3bc297d0b3408a9df7c4b976a6c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6939120248085979184
-    second: "qu\u2500\u2592t_wooden_button_0"
+      213: 2697293089485199974
+    second: quit_wooden_button_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "qu\u2500\u2592t_wooden_button_0"
+      name: quit_wooden_button_0
       rect:
         serializedVersion: 2
-        x: 158
-        y: 711
-        width: 1784
-        height: 625
+        x: 0
+        y: 0
+        width: 1782
+        height: 623
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0df5d1f36ea43bf90800000000000000
-      internalID: -6939120248085979184
+      spriteID: 66a91e526c5be6520800000000000000
+      internalID: 2697293089485199974
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "qu\u2500\u2592t_wooden_button_0": -6939120248085979184
+      quit_wooden_button_0: 2697293089485199974
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

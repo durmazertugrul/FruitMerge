@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -49,10 +48,11 @@ public class GameManager : MonoBehaviour
     public void GameOver() 
     {
         board.enabled = false;
-        OnGameOver?.Invoke();
+        OnGameOver?.Invoke();        
 
     }
 
+    
     public void IncreaseScore(int points) 
     {
         SetScore(score + points);
@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
 
     public int LoadHighScore()
     {
-        return PlayerPrefs.GetInt(Consts.SaveValues.BEST_SCORE, 0);
+        return PlayerPrefs.GetInt(Consts.SaveValues.Best_Score, 0);
     }
 
     private void SaveBestScore() 
@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
 
         if(score > bestScore) 
         {
-            PlayerPrefs.SetInt(Consts.SaveValues.BEST_SCORE, score);
+            PlayerPrefs.SetInt(Consts.SaveValues.Best_Score, score);
            
         }
     }

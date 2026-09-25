@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Banana
   m_EditorClassIdentifier: Assembly-CSharp::TileStateSO
   fruitName: Banana
-  spriteRef: {fileID: 21300000, guid: 78247f4d51e5a4e4b89c826a89fb759b, type: 3}
+  spriteRef: {fileID: 21300000, guid: a9260fb81d38bad4cbb0dcbb8a031500, type: 3}
   chainNumber: 8
   point: 105

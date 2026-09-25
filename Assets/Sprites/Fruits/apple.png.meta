@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7216f166aafdd834da628ce6dce0e5e1
+guid: 1ec911313b2aa684fa5cf7969a24cf4b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7832214784768987486
-    second: apple_0
+      213: 1888395248363040890
+    second: apple 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -48,10 +48,10 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 256
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -72,10 +72,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 256
     resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
+    textureFormat: 4
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: apple_0
+      name: apple 1_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 2
-        width: 56
-        height: 62
+        x: 31
+        y: 21
+        width: 193
+        height: 214
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2ae284d66226e4390800000000000000
-      internalID: -7832214784768987486
+      spriteID: a70f636297de43a10800000000000000
+      internalID: 1888395248363040890
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      apple_0: -7832214784768987486
+      apple 1_0: 1888395248363040890
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

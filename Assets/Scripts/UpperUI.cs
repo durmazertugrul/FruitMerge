@@ -7,6 +7,7 @@ public class UpperUI : MonoBehaviour
 {
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text bestScoreText;
+    
 
     private void Start()
     {
@@ -32,7 +33,13 @@ public class UpperUI : MonoBehaviour
         bestScoreText.text = GameManager.instance.LoadHighScore().ToString();
     }
 
+    private void OnDestroy()
+    {
+        if (GameManager.instance == null) return;
 
+        GameManager.instance.OnScoreChanged -= GameManager_OnScoreChanged;
+        GameManager.instance.OnBestScoreChanged -= GameManager_OnBestScoreChanged;
+    }
 }
 
     

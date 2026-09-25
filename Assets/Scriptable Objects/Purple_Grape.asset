@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Purple_Grape
   m_EditorClassIdentifier: Assembly-CSharp::TileStateSO
   fruitName: Purple Grape
-  spriteRef: {fileID: 21300000, guid: c19fc589603f4044c88b3079409ab504, type: 3}
+  spriteRef: {fileID: 21300000, guid: 6264b154f209f5d45b1f17ed875513ea, type: 3}
   chainNumber: 4
   point: 35

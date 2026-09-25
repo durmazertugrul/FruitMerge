@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Pineapple
   m_EditorClassIdentifier: Assembly-CSharp::TileStateSO
   fruitName: Pineapple
-  spriteRef: {fileID: 21300000, guid: b53143dd460dde04d9a52909e9f87453, type: 3}
+  spriteRef: {fileID: 21300000, guid: 931be70309e236c49adca38f46d1689b, type: 3}
   chainNumber: 10
   point: 180

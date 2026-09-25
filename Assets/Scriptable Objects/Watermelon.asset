@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Watermelon
   m_EditorClassIdentifier: Assembly-CSharp::TileStateSO
   fruitName: Watermelon
-  spriteRef: {fileID: 21300000, guid: 5f7ae02c038fd7f4eb147bd584e4753d, type: 3}
+  spriteRef: {fileID: 21300000, guid: 2673ddbe0c5bcf2478b39ac764e8307a, type: 3}
   chainNumber: 11
   point: 230

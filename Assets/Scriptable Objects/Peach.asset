@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6405e7a47d6eafa47b34acc211b147d1, type: 3}
-  m_Name: Kiwi
+  m_Name: Peach
   m_EditorClassIdentifier: Assembly-CSharp::TileStateSO
-  fruitName: Kiwi
-  spriteRef: {fileID: 21300000, guid: 1364971cec3ecdf448e089cc401e33d5, type: 3}
+  fruitName: Peach
+  spriteRef: {fileID: 21300000, guid: e4ec42dc0e027024aa602ffeaa179b35, type: 3}
   chainNumber: 5
   point: 55

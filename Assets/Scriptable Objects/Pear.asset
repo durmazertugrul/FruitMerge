@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Pear
   m_EditorClassIdentifier: Assembly-CSharp::TileStateSO
   fruitName: Pear
-  spriteRef: {fileID: 21300000, guid: eb5f9fb5014c3fe409f0544a0221f01f, type: 3}
+  spriteRef: {fileID: 21300000, guid: 484ded4b85f631e499f2ab793698fe2c, type: 3}
   chainNumber: 6
   point: 70

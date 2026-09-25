@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7561401c2bfbc7d4d923733275e7be92
+guid: 45205913926d5ca4d811c3ce58c94466
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6134886211432101688
-    second: mainmenu_wooden_button_0
+      213: -1270688833618226609
+    second: level_hud_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -48,7 +48,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mainmenu_wooden_button_0
+      name: level_hud_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1520
-        height: 512
+        x: 137
+        y: 25
+        width: 1262
+        height: 1402
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8373ad9518e732550800000000000000
-      internalID: 6134886211432101688
+      spriteID: f42512cfc3b9d5ee0800000000000000
+      internalID: -1270688833618226609
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      mainmenu_wooden_button_0: 6134886211432101688
+      level_hud_0: -1270688833618226609
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

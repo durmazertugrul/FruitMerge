@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 56f9d10d6985c7d4eaac519aa6d7cc35
+guid: 4442e9bca004ba44f9c0abf88e6fd7bf
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - FruitMerge Pixel
+  - Lilita One
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
