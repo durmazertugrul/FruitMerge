@@ -8,6 +8,7 @@ public class Board : MonoBehaviour
 {
     [SerializeField] private Tile tilePrefab;
     [SerializeField] private TileStateSO[] tileStates;
+    
 
     [SerializeField] private float animationDuration;
 
@@ -120,13 +121,13 @@ public class Board : MonoBehaviour
         a.Merge(b.cell);
 
         int index = Mathf.Clamp(IndexOf(b.tileState) + 1, 0, tileStates.Length - 1);
+        TileStateSO resultFruit = tileStates[index];
 
-        b.SetState(tileStates[index]);
+        b.SetState(resultFruit);
 
         AnimateTiles(b, animationDuration);
 
-        GameManager.instance.IncreaseScore(tileStates[index].point);
-
+        GameManager.instance.FruitCreated(resultFruit);
         AudioManager.instance.Play("MergeSound");
 
     }
@@ -162,6 +163,11 @@ public class Board : MonoBehaviour
         foreach (Tile tile in tiles)
         {
             tile.isLocked = false;
+        }
+
+        if (GameManager.instance.isLevelActive == false) 
+        {
+            yield break;
         }
 
         if (tiles.Count != grid.GetSize())

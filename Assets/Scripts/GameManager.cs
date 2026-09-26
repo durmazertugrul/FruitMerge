@@ -5,16 +5,38 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
     [SerializeField] private Board board;
-
+    [SerializeField] private LevelDatabase levelDatabase;
+    
+    public LevelData CurrentLevel { get; private set; }
     public event Action OnGameOver;
+    public event Action OnLevelCompleted;
     public event Action<int> OnScoreChanged;
     public event Action OnBestScoreChanged;
 
     private int score;
     private int bestScore;
+    public bool isLevelActive;
+
+    
 
     private void Awake()
     {
+        for (int i = 0; i < levelDatabase.levels.Length; i++)
+        {
+            if (levelDatabase.levels[i].levelNumber == LevelSelection.SelectedLevel)
+            {
+                CurrentLevel = levelDatabase.levels[i];
+                break;
+            }
+        }
+
+        if (CurrentLevel == null)
+        {
+            CurrentLevel = levelDatabase.levels[0];
+        }
+
+
+
         if (instance == null)
         {
             instance = this;
@@ -23,10 +45,13 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        
     }
 
     private void Start()
     {
+
         NewGame();
     }
 
@@ -36,6 +61,7 @@ public class GameManager : MonoBehaviour
     {
         SetScore(0);
         OnBestScoreChanged?.Invoke();
+        isLevelActive = true;
 
         board.ClearBoard();
         board.CreateTile();
@@ -47,15 +73,10 @@ public class GameManager : MonoBehaviour
 
     public void GameOver() 
     {
+        isLevelActive = false;
+
         board.enabled = false;
-        OnGameOver?.Invoke();        
-
-    }
-
-    
-    public void IncreaseScore(int points) 
-    {
-        SetScore(score + points);
+        OnGameOver?.Invoke();
     }
 
     private void SetScore(int score)
@@ -67,9 +88,27 @@ public class GameManager : MonoBehaviour
         SaveBestScore();
     }
 
+    public void FruitCreated(TileStateSO fruit) 
+    {
+        SetScore(score + fruit.point);
+
+        if (fruit == CurrentLevel.targetFruit) 
+        {
+            LevelCompleted();
+        }
+    }
+
+    private void LevelCompleted() 
+    {
+        isLevelActive = false;
+        board.enabled = false;
+
+        OnLevelCompleted?.Invoke();
+    }
+
     public int LoadHighScore()
     {
-        return PlayerPrefs.GetInt(Consts.SaveValues.Best_Score, 0);
+        return PlayerPrefs.GetInt(GetHighScoreKey(), 0);
     }
 
     private void SaveBestScore() 
@@ -78,8 +117,13 @@ public class GameManager : MonoBehaviour
 
         if(score > bestScore) 
         {
-            PlayerPrefs.SetInt(Consts.SaveValues.Best_Score, score);
+            PlayerPrefs.SetInt(GetHighScoreKey(), score);
            
         }
+    }
+
+    private string GetHighScoreKey() // One high score per level: BestScore_1, BestScore_2 ...
+    {
+        return Consts.SaveValues.Best_Score + "_" + CurrentLevel.levelNumber;
     }
 }
