@@ -4,7 +4,4 @@ using UnityEngine;
 public class LevelDatabase : ScriptableObject
 {
     public LevelData[] levels;
-   
 }
-
-

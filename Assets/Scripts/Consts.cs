@@ -1,6 +1,12 @@
 
 public static class Consts
 {
+    public struct Levels
+    {
+        public const string Unlocked_Level = "UnlockedLevel"; //store the max level number unlocked by user
+
+    }
+
     public struct SaveValues
     {
         public const string Best_Score = "BestScore";

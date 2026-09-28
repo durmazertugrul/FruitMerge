@@ -16,8 +16,10 @@ public class GameManager : MonoBehaviour
     private int score;
     private int bestScore;
     public bool isLevelActive;
+    private int currentUnlockedLevel;
 
-    
+
+
 
     private void Awake()
     {
@@ -102,6 +104,13 @@ public class GameManager : MonoBehaviour
     {
         isLevelActive = false;
         board.enabled = false;
+
+        currentUnlockedLevel = PlayerPrefs.GetInt(Consts.Levels.Unlocked_Level, 1);
+        
+        if (CurrentLevel.levelNumber == currentUnlockedLevel && CurrentLevel.levelNumber < levelDatabase.levels.Length) 
+        {
+            PlayerPrefs.SetInt(Consts.Levels.Unlocked_Level, currentUnlockedLevel + 1 );
+        }
 
         OnLevelCompleted?.Invoke();
     }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using Unity.VisualScripting;
+using DG.Tweening;
 
 public class MainMenuUI : MonoBehaviour
 {
@@ -33,4 +33,14 @@ public class MainMenuUI : MonoBehaviour
         });
     }
 
+    private void Start()
+    {
+        Vector3 originalScale = playButton.transform.localScale; 
+
+        playButton.transform // animate for play button
+            .DOScale(originalScale * 1.05f, 0.8f)
+            .SetLoops(-1, LoopType.Yoyo)
+            .SetEase(Ease.InOutSine)
+            .SetLink(playButton.gameObject);
+    }
 }

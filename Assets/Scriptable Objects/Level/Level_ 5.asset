@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Level_ 5
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
   levelNumber: 5
-  targetFruit: {fileID: 0}
+  targetFruit: {fileID: 11400000, guid: a6584a1a3bbab4b40a871b3edc456509, type: 2}

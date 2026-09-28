@@ -10,8 +10,9 @@ public class UpperUI : MonoBehaviour
     [SerializeField] private TMP_Text bestScoreText;
 
     [SerializeField] private Image levelImage;
+    [SerializeField] private TMP_Text targetLevelText;
 
-    [Header("Score Punch")] //for animation
+    [Header("Score Punch")] //for score animation
     [SerializeField] private float punchStrength = 0.3f;
     [SerializeField] private float punchDuration = 0.2f;
     [SerializeField] private int punchVibrato = 5;
@@ -21,6 +22,7 @@ public class UpperUI : MonoBehaviour
     {
         LoadBestScore();
         levelImage.sprite = GameManager.instance.CurrentLevel.targetFruit.spriteRef;
+        targetLevelText.text = "LEVEL " + GameManager.instance.CurrentLevel.levelNumber.ToString();
         GameManager.instance.OnScoreChanged += GameManager_OnScoreChanged;
         GameManager.instance.OnBestScoreChanged += GameManager_OnBestScoreChanged;
     }
