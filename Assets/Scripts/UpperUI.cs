@@ -3,11 +3,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.Rendering;
 
 public class UpperUI : MonoBehaviour
 {
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text bestScoreText;
+    [SerializeField] private TMP_Text targetCountText;
 
     [SerializeField] private Image levelImage;
     [SerializeField] private TMP_Text targetLevelText;
@@ -23,8 +25,23 @@ public class UpperUI : MonoBehaviour
         LoadBestScore();
         levelImage.sprite = GameManager.instance.CurrentLevel.targetFruit.spriteRef;
         targetLevelText.text = "LEVEL " + GameManager.instance.CurrentLevel.levelNumber.ToString();
+        targetCountText.text = "X" + GameManager.instance.CurrentLevel.targetCount.ToString();
+        GameManager.instance.OnTargetProgressChanged += GameManager_OnTargetProgressChanged;
         GameManager.instance.OnScoreChanged += GameManager_OnScoreChanged;
         GameManager.instance.OnBestScoreChanged += GameManager_OnBestScoreChanged;
+    }
+
+    private void GameManager_OnTargetProgressChanged(int leftCount) 
+    {
+        targetCountText.text = "X" + leftCount;
+
+        if (leftCount == GameManager.instance.CurrentLevel.targetCount) // Level just started, skip the punch animate
+        {
+            return;
+        }
+
+        targetCountText.transform.DOComplete();
+        targetCountText.transform.DOPunchScale(Vector3.one * punchStrength, punchDuration, punchVibrato, punchElasticity);
     }
 
     private void GameManager_OnScoreChanged(int score)
@@ -50,9 +67,10 @@ public class UpperUI : MonoBehaviour
     private void OnDestroy()
     {
         scoreText.transform.DOKill();
+        targetCountText.transform.DOKill();
 
         if (GameManager.instance == null) return;
-
+        GameManager.instance.OnTargetProgressChanged -= GameManager_OnTargetProgressChanged;
         GameManager.instance.OnScoreChanged -= GameManager_OnScoreChanged;
         GameManager.instance.OnBestScoreChanged -= GameManager_OnBestScoreChanged;
     }

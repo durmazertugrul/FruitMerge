@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9aa6252dd4f9fbc4db1e5b2a503ee237, type: 3}
-  m_Name: Level_ 3
+  m_Name: Level_ 09
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
-  levelNumber: 3
-  targetFruit: {fileID: 11400000, guid: e9547f00d586d9f4abaaf6fd63b4c8e3, type: 2}
+  levelNumber: 9
+  targetCount: 7
+  targetFruit: {fileID: 11400000, guid: 8251590976c4072469d99c35cb510567, type: 2}

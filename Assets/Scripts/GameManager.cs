@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public event Action OnGameOver;
     public event Action OnLevelCompleted;
     public event Action<int> OnScoreChanged;
+    public event Action<int> OnTargetProgressChanged;
     public event Action OnBestScoreChanged;
 
     private int score;
@@ -18,7 +19,7 @@ public class GameManager : MonoBehaviour
     public bool isLevelActive;
     private int currentUnlockedLevel;
 
-
+    private int producedCount;
 
 
     private void Awake()
@@ -61,6 +62,8 @@ public class GameManager : MonoBehaviour
 
     public void NewGame() 
     {
+        producedCount = 0;
+        OnTargetProgressChanged?.Invoke(CurrentLevel.targetCount);
         SetScore(0);
         OnBestScoreChanged?.Invoke();
         isLevelActive = true;
@@ -94,9 +97,21 @@ public class GameManager : MonoBehaviour
     {
         SetScore(score + fruit.point);
 
+        if(isLevelActive == false)
+        {
+            return;
+        }
+
         if (fruit == CurrentLevel.targetFruit) 
         {
-            LevelCompleted();
+            producedCount++;
+            int leftCount = CurrentLevel.targetCount - producedCount;
+            OnTargetProgressChanged?.Invoke(leftCount);
+
+            if (producedCount >= CurrentLevel.targetCount) 
+            {
+                LevelCompleted();
+            }
         }
     }
 

@@ -16,6 +16,7 @@ public class Board : MonoBehaviour
 
     private TileGrid grid;
     private bool isWaiting;
+    private float pitch;
 
     private void Awake()
     {
@@ -50,7 +51,16 @@ public class Board : MonoBehaviour
     public void CreateTile()
     {
         Tile tile = Instantiate(tilePrefab, grid.transform);
-        tile.SetState(tileStates[0]);
+
+        if (Random.Range(0f, 1f) < 0.9f ) //if random number under 0.9 then create cherry
+        {
+            tile.SetState(tileStates[0]);
+        }
+        else // if not create strawberry
+        {
+            tile.SetState(tileStates[1]);
+        }
+
         tile.SpawnTile(grid.GetRandomEmptyCell());
         tiles.Add(tile);
     }
@@ -125,10 +135,12 @@ public class Board : MonoBehaviour
 
         b.SetState(resultFruit);
 
+        float pitch = Mathf.Pow(2f, (index - 1) / 12f);
+
         AnimateTiles(b, animationDuration);
 
         GameManager.instance.FruitCreated(resultFruit);
-        AudioManager.instance.Play("MergeSound");
+        AudioManager.instance.Play("MergeSound", pitch);
 
     }
 

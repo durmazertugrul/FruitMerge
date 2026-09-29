@@ -25,10 +25,11 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void Play(String Name)
+    public void Play(String Name, float pitchMultiplier = 1)
     {
         Sound s = Array.Find(Sounds, Sound => Sound.Name == Name);
         if (s == null) return;
+        s.Source.pitch = s.Pitch * pitchMultiplier;
         s.Source.Play();
     }
 
