@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class GameOverUI : MonoBehaviour
 {
     [SerializeField] private CanvasGroup hudGroup;
+    [SerializeField] private CanvasGroup boardGroup;
     [SerializeField] private Button tryAgainButton;
     [SerializeField] private Button mainMenuButton;
     [SerializeField] private Button quitButton;
@@ -15,8 +16,12 @@ public class GameOverUI : MonoBehaviour
 
     [SerializeField] private TMP_Text scoreTextGO;      // gameover score text
     [SerializeField] private TMP_Text bestScoreTextGO;  // gameover high score text
+    [SerializeField] private TMP_Text newRecordLabel;  
+    [SerializeField] private TMP_Text levelLabel;
 
     private CanvasGroup canvasGroup;
+ 
+
 
     private void Awake()
     {
@@ -24,15 +29,7 @@ public class GameOverUI : MonoBehaviour
 
         tryAgainButton.onClick.AddListener(() =>
         {
-            hudGroup.DOFade(1f, fadeDuration);
-            hudGroup.interactable = true;
-            hudGroup.blocksRaycasts = true;
-
-            canvasGroup.alpha = 0f;
-            canvasGroup.interactable = false;
-            canvasGroup.blocksRaycasts = false;
-
-            GameManager.instance.NewGame();
+            SceneManager.LoadScene(Consts.Scenes.Game);
         });
 
         mainMenuButton.onClick.AddListener(() =>
@@ -54,8 +51,9 @@ public class GameOverUI : MonoBehaviour
 
     private void OnDestroy()
     {
+        newRecordLabel.DOKill();
+        newRecordLabel.transform.DOKill();
         if (GameManager.instance == null) return;
-
         GameManager.instance.OnGameOver -= GameManager_OnGameOver;
         GameManager.instance.OnScoreChanged -= GameManager_OnScoreChanged;
     }
@@ -73,21 +71,43 @@ public class GameOverUI : MonoBehaviour
     private IEnumerator GameOver()
     {
         LoadBestScore();
+        newRecordLabel.gameObject.SetActive(false);
 
         float delaySeconds = 1f;
         yield return new WaitForSeconds(delaySeconds);
 
         hudGroup.DOFade(0f, fadeDuration);
         canvasGroup.DOFade(1f, fadeDuration);
+        boardGroup.DOFade(0f, fadeDuration);
 
         hudGroup.interactable = false;
         hudGroup.blocksRaycasts = false;
+        boardGroup.interactable = false;
+        boardGroup.blocksRaycasts = false;
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
+
+        yield return new WaitForSeconds(fadeDuration);
+
+        if (GameManager.instance.IsNewRecord)
+        {
+            newRecordLabel.gameObject.SetActive(true);
+            bestScoreTextGO.transform.DOKill();
+            bestScoreTextGO.transform.DOPunchScale(Vector3.one * 0.5f, 0.4f, 7, 0.7f);
+
+            newRecordLabel.DOKill();
+            newRecordLabel.alpha = 1;
+            newRecordLabel.DOFade(0.25f, 0.8f).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
+        }
+        else
+        {
+            newRecordLabel.gameObject.SetActive(false);
+        }
     }
 
     private void LoadBestScore()
     {
+        levelLabel.text = "LEVEL " + GameManager.instance.CurrentLevel.levelNumber + " BEST SCORE:";
         bestScoreTextGO.text = GameManager.instance.LoadHighScore().ToString();
     }
 }

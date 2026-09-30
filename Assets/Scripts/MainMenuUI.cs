@@ -14,6 +14,7 @@ public class MainMenuUI : MonoBehaviour
     {
         playButton.onClick.AddListener(() =>
         {
+            LevelSelection.SelectedLevel = PlayerPrefs.GetInt(Consts.Levels.Unlocked_Level, 1);
             SceneManager.LoadScene(Consts.Scenes.Game);
         });
 

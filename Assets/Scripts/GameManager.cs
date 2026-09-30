@@ -8,11 +8,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LevelDatabase levelDatabase;
     
     public LevelData CurrentLevel { get; private set; }
+    public bool IsNewRecord  { get; private set; }
     public event Action OnGameOver;
     public event Action OnLevelCompleted;
     public event Action<int> OnScoreChanged;
     public event Action<int> OnTargetProgressChanged;
     public event Action OnBestScoreChanged;
+    public event Action OnRecordBeaten;
 
     private int score;
     private int bestScore;
@@ -59,9 +61,22 @@ public class GameManager : MonoBehaviour
     }
 
 
-
+    public bool HasLevel(int number) 
+    {
+        for (int i = 0; i < levelDatabase.levels.Length; i++) 
+        {
+            if (levelDatabase.levels[i].levelNumber == number) 
+            {
+                return true;
+            }
+        }
+        
+        return false; 
+    }
     public void NewGame() 
     {
+        IsNewRecord = false;
+        bestScore = LoadHighScore();
         producedCount = 0;
         OnTargetProgressChanged?.Invoke(CurrentLevel.targetCount);
         SetScore(0);
@@ -75,22 +90,35 @@ public class GameManager : MonoBehaviour
         board.enabled = true;
     }
 
+    private void EvaluateBestScore() 
+    {
+        int savedScore = LoadHighScore();
+        if ( score > savedScore) 
+        {
+            PlayerPrefs.SetInt(GetHighScoreKey(), score);
+        }
+        OnBestScoreChanged?.Invoke();
+    }
 
     public void GameOver() 
     {
         isLevelActive = false;
-
         board.enabled = false;
+        EvaluateBestScore();
         OnGameOver?.Invoke();
     }
 
     private void SetScore(int score)
     {
         this.score = score;
-
         OnScoreChanged?.Invoke(score);
 
-        SaveBestScore();
+        if (IsNewRecord == false && bestScore > 0 && score > bestScore) 
+        {
+            IsNewRecord = true;
+            OnRecordBeaten?.Invoke();
+        }
+
     }
 
     public void FruitCreated(TileStateSO fruit) 
@@ -119,6 +147,7 @@ public class GameManager : MonoBehaviour
     {
         isLevelActive = false;
         board.enabled = false;
+        EvaluateBestScore();
 
         currentUnlockedLevel = PlayerPrefs.GetInt(Consts.Levels.Unlocked_Level, 1);
         
@@ -133,17 +162,6 @@ public class GameManager : MonoBehaviour
     public int LoadHighScore()
     {
         return PlayerPrefs.GetInt(GetHighScoreKey(), 0);
-    }
-
-    private void SaveBestScore() 
-    {
-        bestScore = LoadHighScore();
-
-        if(score > bestScore) 
-        {
-            PlayerPrefs.SetInt(GetHighScoreKey(), score);
-           
-        }
     }
 
     private string GetHighScoreKey() // One high score per level: BestScore_1, BestScore_2 ...

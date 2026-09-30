@@ -1,9 +1,7 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using UnityEngine.Rendering;
 
 public class UpperUI : MonoBehaviour
 {
@@ -29,6 +27,7 @@ public class UpperUI : MonoBehaviour
         GameManager.instance.OnTargetProgressChanged += GameManager_OnTargetProgressChanged;
         GameManager.instance.OnScoreChanged += GameManager_OnScoreChanged;
         GameManager.instance.OnBestScoreChanged += GameManager_OnBestScoreChanged;
+        GameManager.instance.OnRecordBeaten += GameManager_OnRecordBeaten;
     }
 
     private void GameManager_OnTargetProgressChanged(int leftCount) 
@@ -52,11 +51,23 @@ public class UpperUI : MonoBehaviour
 
         scoreText.transform.DOComplete();
         scoreText.transform.DOPunchScale(Vector3.one * punchStrength, punchDuration, punchVibrato, punchElasticity);
+
+        if (GameManager.instance.IsNewRecord) 
+        {
+            bestScoreText.text = score.ToString();
+        }
+
     }
 
     private void GameManager_OnBestScoreChanged()
     {
         LoadBestScore();
+    }
+
+    private void GameManager_OnRecordBeaten()
+    {
+        bestScoreText.transform.DOComplete();
+        bestScoreText.transform.DOPunchScale(Vector3.one * punchStrength * 2, punchDuration * 1.5f, punchVibrato, punchElasticity);
     }
 
     private void LoadBestScore()
@@ -66,6 +77,7 @@ public class UpperUI : MonoBehaviour
 
     private void OnDestroy()
     {
+        bestScoreText.transform.DOKill();
         scoreText.transform.DOKill();
         targetCountText.transform.DOKill();
 
@@ -73,5 +85,6 @@ public class UpperUI : MonoBehaviour
         GameManager.instance.OnTargetProgressChanged -= GameManager_OnTargetProgressChanged;
         GameManager.instance.OnScoreChanged -= GameManager_OnScoreChanged;
         GameManager.instance.OnBestScoreChanged -= GameManager_OnBestScoreChanged;
+        GameManager.instance.OnRecordBeaten -= GameManager_OnRecordBeaten;
     }
 }
