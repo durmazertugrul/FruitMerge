@@ -86,6 +86,8 @@ The adopted set was re-verified at 250 trials per level per model. On its hardes
 
 One finding shaped the constraints as much as the numbers did. Producing one Banana requires producing two Apples first, so a "Banana x1" objective contains an "Apple x2" objective and is easier than "Apple x3" despite sitting higher in the chain. Raising a required count is a harsher difficulty lever than advancing one step up the chain, which is why the final ordering could not be derived from chain position alone.
 
+A later round measured whether the level set could be extended past fifteen under the same constraints. It could not, and the reason is worth recording: the objective space above a usable clear rate is occupied almost entirely by bulk low-tier objectives, so fifteen more levels would have repeated near-identical targets. Two candidate difficulty levers were measured and rejected. A move limit produces a cliff rather than a curve, because an objective has an arithmetic minimum number of moves and the limit either sits above it or below it. Changing the spawn mix has no measurable effect at all, since a Strawberry saves only one merge step out of many. Extending the game therefore needs a new mechanic rather than a new difficulty parameter.
+
 The full report, including the per-level tables and difficulty curves, is in [`docs/level-test-report.pdf`](docs/level-test-report.pdf).
 
 ## Controls
@@ -93,13 +95,15 @@ The full report, including the per-level tables and difficulty curves, is in [`d
 | Platform | Input |
 |----------|-------|
 | Desktop  | WASD or arrow keys |
-| Touch    | Swipe gesture (in development) |
+| Touch    | Swipe gesture |
+
+Both input paths call the same move routine, and the swipe threshold is expressed as a fraction of screen height rather than in pixels, so the gesture feels the same across display densities. A swipe fires as soon as it passes the threshold rather than on release, and locks until the finger lifts, so one long drag cannot chain several moves.
 
 ## Screens
 
 - Main Menu (Play, Levels, Settings, Quit)
 - Levels (sixteen tiles, locked and unlocked states resolved at runtime)
-- In-game HUD (score, high score, level number, target fruit and remaining count)
+- In-game HUD (score, per-level high score, level number, target fruit and remaining count)
 - Level Completed (Continue, Try Again, Main Menu)
 - Game Over (Try Again, Main Menu, Quit)
 - Settings (music and sound effect toggles)
@@ -108,15 +112,16 @@ The full report, including the per-level tables and difficulty curves, is in [`d
 
 - **Engine and language:** Unity, C#
 - **Data:** fruit tiers and level definitions are ScriptableObjects, so objectives and point values are authored as assets rather than compiled into code
-- **UI:** an event-driven HUD. The game manager raises score, objective-progress and level-outcome events, and the UI components subscribe to them; nothing polls game state per frame
+- **UI:** an event-driven HUD. The game manager raises score, objective-progress, record and level-outcome events, and the UI components subscribe to them; nothing polls game state per frame
 - **Level flow:** level transitions reload the gameplay scene rather than resetting state by hand, which keeps animation, input and board state from leaking between attempts
-- **Persistence:** local save data for per-level high scores and unlock progress
-- **Audio:** a single persistent music source survives scene loads behind a duplicate guard; the merge sound's pitch is scaled by the tier of the fruit it produces, so climbing the chain is audible
+- **Persistence:** local save data for per-level high scores, unlock progress and audio settings, flushed explicitly on write so a browser session that is closed without a quit event does not lose progress
+- **Settings:** audio preferences are exposed through a single static accessor that raises a change event, so the music source and the effect player read one source of truth instead of keeping their own copies
+- **Audio:** a single persistent music source survives scene loads behind a duplicate guard, and muting rather than stopping it means the track resumes in place instead of restarting; the merge sound's pitch is scaled by the tier of the fruit it produces, so climbing the chain is audible
 - **Tooling:** the balancing simulation is a separate Python harness and is not part of the game build
 
 ## Project status
 
-In active development. The merge mechanic, the objective and level system, scoring and persistence, the level select screen and the full menu flow are implemented. Remaining before the first release: touch input, the settings toggles, an audio pass and the WebGL build.
+Version 1 is feature complete. The merge mechanic, the objective and level system, scoring and per-level records, sequential unlocking, the full menu flow, the settings screen and touch input are all implemented and working. 
 
 ## Roadmap
 
@@ -128,13 +133,12 @@ In active development. The merge mechanic, the objective and level system, scori
 - [x] Sequential level unlocking with persistent progress
 - [x] Menu flow, level select, level completed and game over screens
 - [x] Persistent background music and tier-scaled merge audio
-- [ ] Touch and swipe input
-- [ ] Settings toggles for music and sound effects
-- [ ] New-record indication on the results screens
-- [ ] Audio and polish pass
-- [ ] WebGL build and release
-- [ ] Move-limited level objectives
-- [ ] Additional levels
+- [x] New-record indication during play and on the results screens
+- [x] Settings screen with music and sound effect toggles
+- [x] Touch and swipe input
+- [x] WebGL build and release
+- [ ] Obstacle tiles: a straw bale that blocks a cell and is cleared by merges in its row or column
+- [ ] A second chapter of levels built around the obstacle mechanic
 
 ## License
 
