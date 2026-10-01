@@ -1,5 +1,4 @@
 using DG.Tweening;
-using DG.Tweening.Core.Easing;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +7,8 @@ public class Board : MonoBehaviour
 {
     [SerializeField] private Tile tilePrefab;
     [SerializeField] private TileStateSO[] tileStates;
-    
+    [SerializeField] float swipeThresholdFraction = 0.04f;
+
 
     [SerializeField] private float animationDuration;
 
@@ -16,7 +16,9 @@ public class Board : MonoBehaviour
 
     private TileGrid grid;
     private bool isWaiting;
-    private float pitch;
+    private Vector2 startPos;
+    private bool tracking;
+    private bool firedThisSwipe;
 
     private void Awake()
     {
@@ -30,22 +32,58 @@ public class Board : MonoBehaviour
         if (!isWaiting)
         {
             if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-            {
                 MoveTiles(Vector2Int.up, 0, 1, 1, 1);
-            }
             else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
-            {
                 MoveTiles(Vector2Int.down, 0, 1, grid.GetHeight() - 2, -1);
-            }
             else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
-            {
                 MoveTiles(Vector2Int.left, 1, 1, 0, 1);
-            }
             else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
-            {
                 MoveTiles(Vector2Int.right, grid.GetWidth() - 2, -1, 0, 1);
-            }
+            else 
+                ReadSwipe();
         }
+    }
+
+
+    private void ReadSwipe() // This method is responsible for detecting swipe gestures and determining the direction of the swipe.
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            startPos = Input.mousePosition;
+            tracking = true;
+            firedThisSwipe = false;
+        }
+
+        if (Input.GetMouseButtonUp(0))
+            tracking = false;
+
+        if (tracking == false || firedThisSwipe == true) return;
+
+        Vector2 delta = (Vector2)Input.mousePosition - startPos;
+        if (delta.magnitude < Screen.height * swipeThresholdFraction) 
+        {
+            return;
+        }
+
+        firedThisSwipe = true;
+
+
+        if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
+        {
+            if (delta.x > 0)
+                MoveTiles(Vector2Int.right, grid.GetWidth() - 2, -1, 0, 1);
+            else
+                MoveTiles(Vector2Int.left, 1, 1, 0, 1);
+
+        }
+        else 
+        {
+            if (delta.y > 0)
+                MoveTiles(Vector2Int.up, 0, 1, 1, 1);
+            else
+                MoveTiles(Vector2Int.down, 0, 1, grid.GetHeight() - 2, -1);
+        }
+
     }
 
     public void CreateTile()
@@ -53,13 +91,10 @@ public class Board : MonoBehaviour
         Tile tile = Instantiate(tilePrefab, grid.transform);
 
         if (Random.Range(0f, 1f) < 0.9f ) //if random number under 0.9 then create cherry
-        {
             tile.SetState(tileStates[0]);
-        }
+       
         else // if not create strawberry
-        {
             tile.SetState(tileStates[1]);
-        }
 
         tile.SpawnTile(grid.GetRandomEmptyCell());
         tiles.Add(tile);

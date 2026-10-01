@@ -10,7 +10,9 @@ public static class Consts
     public struct SaveValues
     {
         public const string Best_Score = "BestScore";
-        
+        public const string Music_On = "MusicOn";
+        public const string Sfx_On = "SfxOn";
+
     }
     public struct Scenes
     {

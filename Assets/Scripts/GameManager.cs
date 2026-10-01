@@ -96,6 +96,7 @@ public class GameManager : MonoBehaviour
         if ( score > savedScore) 
         {
             PlayerPrefs.SetInt(GetHighScoreKey(), score);
+            PlayerPrefs.Save();
         }
         OnBestScoreChanged?.Invoke();
     }
@@ -154,6 +155,7 @@ public class GameManager : MonoBehaviour
         if (CurrentLevel.levelNumber == currentUnlockedLevel && CurrentLevel.levelNumber < levelDatabase.levels.Length) 
         {
             PlayerPrefs.SetInt(Consts.Levels.Unlocked_Level, currentUnlockedLevel + 1 );
+            PlayerPrefs.Save();
         }
 
         OnLevelCompleted?.Invoke();

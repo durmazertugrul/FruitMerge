@@ -11,7 +11,14 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         instance = this;
+        DontDestroyOnLoad(gameObject);
 
         foreach (Sound s in Sounds)
         {
@@ -27,6 +34,8 @@ public class AudioManager : MonoBehaviour
 
     public void Play(String Name, float pitchMultiplier = 1)
     {
+        if(SoundSettings.SfxOn == false) return;
+
         Sound s = Array.Find(Sounds, Sound => Sound.Name == Name);
         if (s == null) return;
         s.Source.pitch = s.Pitch * pitchMultiplier;
